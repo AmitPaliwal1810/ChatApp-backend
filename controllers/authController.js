@@ -215,7 +215,19 @@ export const RemoveProfileImage = async (req, res, next) => {
 
     return res.status(200).send("Profile image deleted successfully");
   } catch (error) {
-    console.error("Error in RemoveProfileImage:", error); 
+    console.error("Error in RemoveProfileImage:", error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
+};
+
+export const logout = async (req, res, next) => {
+  try {
+    res.cookie("jwt", "", { maxAge: 1, secure: true, sameSite: "None" });
+    return res.status(200).send("Logout Successfully");
+  } catch (error) {
+    console.error("Error in RemoveProfileImage:", error);
     return res.status(500).json({
       message: "Internal Server Error",
     });

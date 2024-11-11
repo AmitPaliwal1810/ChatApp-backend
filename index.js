@@ -4,6 +4,8 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import authRoutes from "./routes/authRoutes.js";
+import contactsRoutes from "./routes/contactsRoutes.js";
+import setupSocket from "./socket.js";
 
 dotenv.config();
 
@@ -20,13 +22,21 @@ app.use(
   })
 );
 
-app.use('/uploads/profiles', express.static("uploads/profiles"))
+app.use("/uploads/profiles", express.static("uploads/profiles"));
 
 app.use(cookieParser()); // frontend will send some cookies some that we need this cookie-parser.
 
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
+app.use("/api/contacts", contactsRoutes);
+
+// created a server instance to pass in the socket
+const server = app.listen(PORT, () => {
+  console.log(`Server is running on PORT ${PORT}`);
+});
+
+setupSocket(server)
 
 const connectDB = async () => {
   try {
@@ -38,7 +48,3 @@ const connectDB = async () => {
 };
 
 connectDB();
-
-app.listen(PORT, () => {
-  console.log(`Server is running on PORT ${PORT}`);
-});

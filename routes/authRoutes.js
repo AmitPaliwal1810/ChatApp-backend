@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   getUserInfo,
   login,
+  logout,
   RemoveProfileImage,
   signup,
   updateProfile,
@@ -42,5 +43,6 @@ authRoutes.post(
   UpdateProfileImage
 );
 authRoutes.delete("/remove-profile-image", verifyToken, RemoveProfileImage);
+authRoutes.post("/logout", logout);
 
 export default authRoutes;

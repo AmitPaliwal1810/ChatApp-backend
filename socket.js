@@ -10,16 +10,6 @@ const setupSocket = (server) => {
     },
   });
 
-  const disconnect = () => {
-    console.log(`Client disconnected ${socket.id}`);
-    for (const [userId, socketId] of userSocketMap.entries()) {
-      if (socketId === socket.id) {
-        userSocketMap.delete(userId);
-        break;
-      }
-    }
-  };
-
   const userSocketMap = new Map();
 
   const sendMessage = async (message) => {
@@ -30,7 +20,7 @@ const setupSocket = (server) => {
 
     const messageData = await Message.findById(createdMessage._id)
       .populate("sender", "id email firstName lastName image color")
-      .populate("receipent", "id email firstName lastName image color");
+      .populate("recipient", "id email firstName lastName image color");
 
     if (recipientSocketId) {
       io.to(recipientSocketId).emit("receiveMessage", messageData);
@@ -40,18 +30,26 @@ const setupSocket = (server) => {
     }
   };
 
-  io.on("connnection", (socket) => {
+  io.on("connection", (socket) => {
     const userId = socket?.handshake?.query?.userId;
     if (userId) {
-      userSocketMap.set(userId, socket?.id);
-      console.log(`user connected : ${userId} with socketIdL ${socket?.id}`);
+      userSocketMap.set(userId, socket.id);
+      console.log(`User connected: ${userId} with socketId: ${socket.id}`);
     } else {
-      console.log("User Id not provided");
+      console.log("User ID not provided");
     }
 
     socket.on("sendMessage", sendMessage);
 
-    socket.on("disconnect", () => disconnect);
+    socket.on("disconnect", () => {
+      console.log(`Client disconnected: ${socket.id}`);
+      for (const [userId, socketId] of userSocketMap.entries()) {
+        if (socketId === socket.id) {
+          userSocketMap.delete(userId);
+          break;
+        }
+      }
+    });
   });
 };
 

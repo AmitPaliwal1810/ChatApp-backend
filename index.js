@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import authRoutes from "./routes/authRoutes.js";
 import contactsRoutes from "./routes/contactsRoutes.js";
 import setupSocket from "./socket.js";
+import messagesRoutes from "./routes/messagesRoutes.js";
 
 dotenv.config();
 
@@ -30,13 +31,14 @@ app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/contacts", contactsRoutes);
+app.use("/api/messages", messagesRoutes);
 
 // created a server instance to pass in the socket
 const server = app.listen(PORT, () => {
   console.log(`Server is running on PORT ${PORT}`);
 });
 
-setupSocket(server)
+setupSocket(server);
 
 const connectDB = async () => {
   try {

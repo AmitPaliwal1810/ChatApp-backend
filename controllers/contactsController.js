@@ -33,6 +33,8 @@ export const searchContacts = async (req, res, next) => {
   }
 };
 
+//------------------------------------------------- Get Contact for DM------------------------------------------
+
 export const getContactForDMList = async (req, res, next) => {
   try {
     let { userId } = req;
@@ -88,6 +90,33 @@ export const getContactForDMList = async (req, res, next) => {
         $sort: { lastMessageTime: -1 },
       },
     ]);
+
+    return res.status(200).json({
+      contacts,
+    });
+  } catch (error) {
+    console.error("Error in RemoveProfileImage:", error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
+};
+
+//--------------------- GetAll contacts--------------------
+
+export const getAllContacts = async (req, res, next) => {
+  const users = await UserModel.find(
+    { _id: { $ne: req.userId } },
+    "firstName lastName email _id"
+  );
+
+  try {
+    const contacts = users.map((user) => ({
+      label: user.firstName
+        ? `${user.firstName} ${user.lastName}`
+        : `${user.email}`,
+      value: user._id,
+    }));
 
     return res.status(200).json({
       contacts,

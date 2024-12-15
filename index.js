@@ -7,6 +7,7 @@ import authRoutes from "./routes/authRoutes.js";
 import contactsRoutes from "./routes/contactsRoutes.js";
 import setupSocket from "./socket.js";
 import messagesRoutes from "./routes/messagesRoutes.js";
+import channelRoutes from "./routes/channelRoutes.js";
 
 dotenv.config();
 
@@ -33,6 +34,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/contacts", contactsRoutes);
 app.use("/api/messages", messagesRoutes);
+app.use("/api/channels", channelRoutes);
 
 // created a server instance to pass in the socket
 const server = app.listen(PORT, () => {

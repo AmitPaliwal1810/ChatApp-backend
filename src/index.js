@@ -3,11 +3,11 @@ import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
-import authRoutes from "./routes/authRoutes.js";
-import contactsRoutes from "./routes/contactsRoutes.js";
-import setupSocket from "./socket.js";
-import messagesRoutes from "./routes/messagesRoutes.js";
-import channelRoutes from "./routes/channelRoutes.js";
+import authRoutes from "../routes/authRoutes.js";
+import contactsRoutes from "../routes/contactsRoutes.js";
+import setupSocket from "../socket.js";
+import messagesRoutes from "../routes/messagesRoutes.js";
+import channelRoutes from "../routes/channelRoutes.js";
 
 dotenv.config();
 

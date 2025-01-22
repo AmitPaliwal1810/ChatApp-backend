@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node dist/src/index.js",
     "dev": "nodemon src/index.js",
-    "build": "npm install && rimraf dist && mkdir dist && ncp .env dist/.env && ncp src dist/src && ncp routes dist/routes && ncp controllers dist/controllers && ncp middlewares dist/middlewares && ncp models dist/models && ncp socket.js dist/socket.js"
+    "build": "npm install && rimraf dist && mkdir dist && ncp src dist/src && ncp routes dist/routes && ncp controllers dist/controllers && ncp middlewares dist/middlewares && ncp models dist/models && ncp socket.js dist/socket.js"
   },
   "keywords": [],
   "author": "",

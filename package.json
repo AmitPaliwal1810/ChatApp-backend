@@ -23,7 +23,8 @@
     "mongodb": "^6.8.0",
     "mongoose": "^8.5.2",
     "multer": "^1.4.5-lts.1",
-    "socket.io": "^4.8.1"
+    "socket.io": "^4.8.1",
+    "rimraf": "^6.0.1"
   },
   "devDependencies": {
     "ncp": "^2.0.0",

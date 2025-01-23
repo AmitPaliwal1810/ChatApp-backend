@@ -20,21 +20,23 @@ app.use(
   cors({
     origin: process.env.ORIGIN,
     methods: ["GET", "PUT", "POST", "PATCH", "DELETE"],
-    credentials: true, 
+    credentials: true, // when you use cookie that time you need to make it true.
   })
 );
 
 app.use("/uploads/profiles", express.static("uploads/profiles"));
 app.use("/uploads/files", express.static("uploads/files"));
 
-app.use(cookieParser()); // Parse cookies
-app.use(express.json()); // Parse JSON requests
+app.use(cookieParser()); // frontend will send some cookies some that we need this cookie-parser.
+
+app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/contacts", contactsRoutes);
 app.use("/api/messages", messagesRoutes);
 app.use("/api/channels", channelRoutes);
 
+// created a server instance to pass in the socket
 const server = app.listen(PORT, () => {
   console.log(`Server is running on PORT ${PORT}`);
 });
@@ -43,10 +45,10 @@ setupSocket(server);
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(databaseURL, { useNewUrlParser: true, useUnifiedTopology: true });
+    await mongoose.connect(databaseURL);
     console.log("MongoDB connected...");
   } catch (error) {
-    console.log("Error connecting to MongoDB:", error);
+    console.log(error);
   }
 };
 
